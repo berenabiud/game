@@ -11,7 +11,7 @@ function App() {
   const [rating, setRating] = useState(0);  // Add state to track the selected rating filter
   const [loading, setLoading] = useState(false);
 
-  const API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your actual API key from RAWG
+  const API_KEY = 'bdaadfbc69b6442fb0a533ec2d7ccf87'; // Replace with your actual API key from RAWG
 
   // Fetch games from the RAWG API with rating filter
   const fetchGames = async () => {
