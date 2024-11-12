@@ -1,20 +1,19 @@
-import React, { useState,  } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-
-// Importing components from the /src/components folder
-import SearchBar from './components/SearchBar';  
+import SearchBar from './components/SearchBar';
 import GameList from './components/GameList';
 
 function App() {
   const [games, setGames] = useState([]);
   const [query, setQuery] = useState('');
-  const [rating, setRating] = useState(0);  // Add state to track the selected rating filter
+  const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const API_KEY = 'bdaadfbc69b6442fb0a533ec2d7ccf87'; // Replace with your actual API key from RAWG
+  const API_KEY = 'bdaadfbc69b6442fb0a533ec2d7ccf87';  // Replace with your actual API key from RAWG
 
-  // Fetch games from the RAWG API with rating filter
+  // Fetch games from the RAWG API
   const fetchGames = async () => {
+    if (!query) return;  // Prevent fetch if query is empty
     setLoading(true);
     try {
       const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=10&search=${query}&rating=${rating}`);
@@ -27,16 +26,21 @@ function App() {
     }
   };
 
-  // Button click handler to trigger game fetch
+  // Fetch games whenever `query` or `rating` changes
+  useEffect(() => {
+    fetchGames();
+  }, [query, rating]);
+
+  // Optional: Add a manual search button to trigger fetch
   const handleSearch = () => {
-    if (query) {
-      fetchGames();
-    }
+    fetchGames();
   };
 
   return (
     <div className="App">
       <h1>Game Library</h1>
+      
+      {/* Search Bar */}
       <SearchBar setQuery={setQuery} />
 
       {/* Rating Filter */}
@@ -47,21 +51,13 @@ function App() {
           value={rating} 
           onChange={(e) => setRating(Number(e.target.value))}
         >
-          <option value={0}>0</option>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
+          {[...Array(11).keys()].map((num) => (
+            <option key={num} value={num}>{num}</option>
+          ))}
         </select>
       </div>
 
-      {/* Search Button */}
+      {/* Optional Search Button */}
       <button onClick={handleSearch}>Search</button>
 
       {/* Loading and Games List */}
