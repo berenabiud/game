@@ -36,3 +36,82 @@
     transform: rotate(360deg);
   }
 }
+.search-filter {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.filter-item label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.filter-item input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.filter-item input:focus {
+  border-color: #0056b3;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: #0056b3;
+  color: rgb(200, 35, 35);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #003d7a;
+}
+
+@media (max-width: 768px) {
+  .search-filter {
+    padding: 15px;
+  }
+
+  .filter-item input {
+    font-size: 0.9rem;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+}
+.game-container {
+  display: flex;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Automatically adjust columns based on screen size */
+  gap: 20px; /* Space between rows and columns */
+  justify-items: center; /* Center items horizontally */
+}
+
+.GameCard {
+  width: 100%; /* Ensure each game card takes full width of grid cell */
+  padding: 10px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

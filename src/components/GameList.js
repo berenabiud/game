@@ -1,20 +1,34 @@
 import React from 'react';
-import GameCard from './GameCard'; // Import GameCard component
+import GameCard from './GameCard';
 
-function GameList({ games }) {
+function GameList({ games, addToWishlist }) {
+  if (games.length === 0) {
+    return <p>No games found</p>;
+  }
+
+  const styles = {
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '20px', // Space between cards
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '20px',
+    },
+  };
+
   return (
-    <div className="game-list">
-      {games.length === 0 ? (
-        <p>No games found</p>
-      ) : (
-        <div className="game-cards-container">
-          {games.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
-        </div>
-      )}
+    <div style={styles.container}>
+      {games.map((game) => (
+        <GameCard
+          key={game.id}
+          gameId={game.id}
+          addToWishlist={addToWishlist}
+        />
+      ))}
     </div>
   );
 }
 
 export default GameList;
+
