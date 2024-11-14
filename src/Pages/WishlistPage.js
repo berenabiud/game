@@ -29,7 +29,7 @@ function WishlistPage() {
   }
 
   return (
-    <div>
+    <div style={styles.container}>
       <h2>Your Wishlist</h2>
       {wishlist.length === 0 ? (
         <p>Your wishlist is empty.</p>
@@ -49,5 +49,15 @@ function WishlistPage() {
     </div>
   );
 }
+
+// Updated styles for WishlistPage with background color
+const styles = {
+  container: {
+    padding: '20px',
+    maxWidth: '800px',
+    margin: '0 auto',
+    backgroundColor: '#f9f9f9', // Add your desired background color here
+  },
+};
 
 export default WishlistPage;

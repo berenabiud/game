@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import GameList from './GameList';
+
 function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
   const [error, setError] = useState(null);
@@ -30,11 +30,15 @@ function Wishlist() {
       method: 'DELETE',
     })
     .then(response => {
+      console.log("Delete response:", response); // Debugging log
       if (!response.ok) {
         throw new Error('Failed to delete game');
       }
       console.log("Game deleted successfully"); // Debugging log
-      setWishlist(prevWishlist => prevWishlist.filter(game => game.id !== gameId));
+      setWishlist(prevWishlist => {
+        console.log("Previous Wishlist:", prevWishlist); // Debugging log
+        return prevWishlist.filter(game => game.id !== gameId);
+      });
     })
     .catch(error => {
       console.error("Delete error:", error.message); // Debugging log
@@ -75,6 +79,7 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap', // Allows cards to wrap if they overflow the container width
     gap: '20px', // Space between cards
+    backgroundColor: '#f0f0f0', // Background color of the Wishlist page (light gray)
   },
   card: {
     border: '1px solid #ccc',

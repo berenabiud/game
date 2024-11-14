@@ -50,12 +50,13 @@ function About() {
   );
 }
 
-// Basic styles for the About page
+// Updated styles for the About page with a background color
 const styles = {
   container: {
     padding: '20px',
     maxWidth: '800px',
     margin: '0 auto',
+    backgroundColor: '#f0f8ff', // Add your desired background color here
   },
   section: {
     marginBottom: '20px',
