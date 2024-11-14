@@ -8,7 +8,7 @@ function WishlistPage() {
 
   // Fetch wishlist from the backend (json-server)
   useEffect(() => {
-    fetch('http://localhost:5000/wishlist')
+    fetch('https://plantsy-q1eq.onrender.com/wishlist')
       .then((response) => response.json())
       .then((data) => {
         setWishlist(data);
