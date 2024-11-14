@@ -1,7 +1,7 @@
 // src/App.js
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar'; // Import Navbar component
 import Home from './Pages/Home'; // Path from App.js inside src to Home.js inside src/pages
 import WishlistPage from './Pages/WishlistPage'; // Path from App.js inside src to WishlistPage.js inside src/pages
@@ -23,3 +23,4 @@ function App() {
 }
 
 export default App;
+
