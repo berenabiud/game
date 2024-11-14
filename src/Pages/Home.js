@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import GameList from '../components/GameList';
 import SearchFilter from '../components/SearchFilter';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../App.css'; // Import the CSS file
 
 function Home() {
   const [games, setGames] = useState([]);
@@ -67,18 +67,21 @@ function Home() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="home-loading">Loading...</div>;
   }
 
   if (error) {
-    return <div>Error fetching games: {error}</div>;
+    return <div className="home-error">Error fetching games: {error}</div>;
   }
 
   return (
-    <div style={{ backgroundColor: '#ADD8E6', minHeight: '100vh', padding: '20px' }}>
-      <SearchFilter onSearch={handleSearch} />
-      <GameList games={filteredGames} addToWishlist={addToWishlist} />
-      <Link to="/wishlist">Go to Wishlist</Link>
+    <div className="home-container">
+      <div className="home-overlay">
+        <h1 className="home-header">Game Library</h1>
+        <SearchFilter onSearch={handleSearch} />
+        <GameList games={filteredGames} addToWishlist={addToWishlist} />
+        <Link to="/wishlist" className="home-wishlist-link">Go to Wishlist</Link>
+      </div>
     </div>
   );
 }

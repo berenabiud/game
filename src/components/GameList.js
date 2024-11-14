@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import GameCard from './GameCard';
+import '../App.css'; // Import the new CSS file
 
 function GameList({ games, addToWishlist }) {
   const [selectedGameId, setSelectedGameId] = useState(null); // Track the selected game ID
@@ -15,30 +16,10 @@ function GameList({ games, addToWishlist }) {
     setSelectedGameId(gameId === selectedGameId ? null : gameId);
   };
 
-  const styles = {
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '20px',
-      justifyContent: 'center',
-      alignItems: 'stretch',
-      padding: '20px',
-    },
-    cardWrapper: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      flex: '1 1 300px',
-      maxWidth: '300px',
-      minHeight: '400px',
-      boxSizing: 'border-box',
-    },
-  };
-
   return (
-    <div style={styles.container}>
+    <div className="game-list-container">
       {games.map((game) => (
-        <div style={styles.cardWrapper} key={game.id}>
+        <div className="game-card-wrapper" key={game.id}>
           <GameCard
             gameId={game.id}
             addToWishlist={addToWishlist}
