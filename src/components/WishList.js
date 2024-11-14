@@ -1,70 +1,62 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function Wishlist({ game }) {
-  const [isAdded, setIsAdded] = useState(false);
+function Wishlist() {
+  const [wishlist, setWishlist] = useState([]);
+  const [error, setError] = useState(null);
 
-  // Function to handle adding a game to the wishlist
-  const addToWishlist = () => {
-    fetch('https://your-json-server.onrender.com/wishlist', { // Replace with your actual API endpoint
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(game), // Sending the game data to the wishlist
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Game added to wishlist:', data);
-        setIsAdded(true);
+  useEffect(() => {
+    // Fetch the wishlist from the server
+    fetch('https://plantsy-q1eq.onrender.com/wishlist')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch wishlist');
+        }
+        return response.json();
       })
-      .catch(error => console.error('Error adding game to wishlist:', error));
-  };
+      .then(data => setWishlist(data))
+      .catch(error => setError(error.message));
+  }, []);
 
   return (
-    <div style={{
-      marginBottom: '20px',
-      padding: '10px',
-      border: '1px solid #ddd',
-      borderRadius: '8px',
-      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-    }}>
-      <h3>{game.title}</h3>
-      <p>{game.description}</p>
-      <p><strong>Year:</strong> {game.year}</p>
-      <p><strong>Rating:</strong> {game.rating}</p>
-      <img 
-        src={game.imageUrl} 
-        alt={game.title} 
-        style={{
-          width: '150px',
-          height: 'auto',
-          marginTop: '10px',
-        }} 
-      />
-      {!isAdded ? (
-        <button 
-          onClick={addToWishlist}
-          style={{
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            padding: '10px 20px',
-            textAlign: 'center',
-            textDecoration: 'none',
-            display: 'inline-block',
-            fontSize: '16px',
-            marginTop: '10px',
-            cursor: 'pointer',
-            borderRadius: '4px',
-          }}
-        >
-          Add to Wishlist
-        </button>
+    <div style={styles.container}>
+      <h2>Your Wishlist</h2>
+      {error && <p style={styles.error}>Error: {error}</p>}
+      {wishlist.length > 0 ? (
+        wishlist.map(game => (
+          <div key={game.id} style={styles.card}>
+            <h3>{game.name}</h3>
+            <p>{game.description || 'No description available'}</p>
+            <p><strong>Year:</strong> {game.year || 'N/A'}</p>
+            <p><strong>Rating:</strong> {game.rating || 'N/A'}</p>
+            <img src={game.imageUrl} alt={game.name} style={styles.image} />
+          </div>
+        ))
       ) : (
-        <p style={{ marginTop: '10px', color: 'green' }}>Game added to wishlist!</p>
+        <p>Your wishlist is empty.</p>
       )}
     </div>
   );
 }
+
+const styles = {
+  container: {
+    padding: '20px',
+  },
+  card: {
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    padding: '15px',
+    marginBottom: '15px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  },
+  image: {
+    width: '150px',
+    height: 'auto',
+    borderRadius: '4px',
+  },
+  error: {
+    color: 'red',
+  },
+};
 
 export default Wishlist;

@@ -40,7 +40,7 @@ function Home() {
       });
   };
 
-  const addToWishlist = (game, userRating) => {
+  const addToWishlist = (game, userRating=5) => {
     // Add the user rating to the game data
     const gameWithRating = { ...game, userRating };
 
