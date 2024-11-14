@@ -4,7 +4,11 @@ function GameCard({ gameId, addToWishlist, isSelected, onClick }) {
   const [game, setGame] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userRating, setUserRating] = useState(0); // State to manage user rating
+  const [userRating, setUserRating] = useState(0);
+
+  // Define an array of background colors
+  const colors = ["#FFB6C1", "#87CEFA", "#90EE90", "#FFD700", "#FF69B4", "#FFA07A", "#20B2AA"];
+  const backgroundColor = colors[gameId % colors.length]; // Choose a color based on gameId
 
   useEffect(() => {
     if (gameId) {
@@ -28,15 +32,13 @@ function GameCard({ gameId, addToWishlist, isSelected, onClick }) {
   }, [gameId]);
 
   const handleAddToWishlist = (event) => {
-    // Prevent the default button action (if any) and stop event propagation to avoid page reload
-    event.preventDefault(); // Prevent page reload or form submission
-    event.stopPropagation(); // Prevent the event from bubbling up to parent components
-
-    addToWishlist(game, userRating); // Add the game to the wishlist
+    event.preventDefault();
+    event.stopPropagation();
+    addToWishlist(game, userRating);
   };
 
   const handleRatingChange = (event) => {
-    event.stopPropagation(); // Prevent this change event from bubbling up
+    event.stopPropagation();
     setUserRating(Number(event.target.value));
   };
 
@@ -53,7 +55,7 @@ function GameCard({ gameId, addToWishlist, isSelected, onClick }) {
   }
 
   return (
-    <div style={styles.card} onClick={onClick}>
+    <div style={{ ...styles.card, backgroundColor }} onClick={onClick}>
       <img src={game.background_image} alt={game.name} style={styles.image} />
       <div style={styles.details}>
         <h3>{game.name}</h3>
@@ -66,14 +68,13 @@ function GameCard({ gameId, addToWishlist, isSelected, onClick }) {
             <p>Playtime: {game.playtime} hours</p>
             <p>Tags: {game.tags.map(tag => tag.name).join(', ')}</p>
 
-            {/* Rating input */}
             <div style={styles.ratingContainer}>
               <label htmlFor="rating">Rate this game:</label>
               <input
                 type="number"
                 id="rating"
                 value={userRating}
-                onClick={(e) => e.stopPropagation()} // Prevent bubbling for input focus
+                onClick={(e) => e.stopPropagation()}
                 onChange={handleRatingChange}
                 min="0"
                 max="10"
@@ -81,7 +82,6 @@ function GameCard({ gameId, addToWishlist, isSelected, onClick }) {
               />
             </div>
 
-            {/* Add to Wishlist button */}
             <button onClick={handleAddToWishlist} style={styles.button}>
               Add to Wishlist
             </button>
@@ -104,6 +104,7 @@ const styles = {
     alignItems: 'stretch',
     height: '100%',
     cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
   },
   image: {
     width: '100%',

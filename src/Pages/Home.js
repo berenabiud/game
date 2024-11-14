@@ -43,12 +43,9 @@ function Home() {
   const addToWishlist = (game, userRating = 5) => {
     const gameWithRating = { ...game, rating: userRating };
 
-    // Check if the game is already in the wishlist
     if (!wishlist.find((item) => item.id === game.id)) {
-      // Add to local wishlist state
       setWishlist((prevWishlist) => [...prevWishlist, gameWithRating]);
 
-      // Send POST request to add the game to the wishlist on the server
       fetch('https://plantsy-q1eq.onrender.com/wishlist', {
         method: 'POST',
         headers: {
@@ -78,7 +75,7 @@ function Home() {
   }
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#ADD8E6', minHeight: '100vh', padding: '20px' }}>
       <SearchFilter onSearch={handleSearch} />
       <GameList games={filteredGames} addToWishlist={addToWishlist} />
       <Link to="/wishlist">Go to Wishlist</Link>
